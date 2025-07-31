@@ -1,17 +1,19 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <world name="default">
+    
+    <!-- Required plugin for ROS <=> Gazebo integration -->
+    <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
 
-    <!-- Ground and sun -->
-    <include>
-      <uri>model://ground_plane</uri>
-    </include>
+    <!-- A global light source -->
     <include>
       <uri>model://sun</uri>
     </include>
 
-    <!-- ROS 2 spawn plugin -->
-    <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
 
   </world>
 </sdf>
