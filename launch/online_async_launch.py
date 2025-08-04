@@ -1,7 +1,7 @@
 import os
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, LogInfo
+from launch.actions import DeclareLaunchArgument, LogInfo, TimerAction
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
@@ -11,8 +11,8 @@ from nav2_common.launch import HasNodeParams
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
-    params_file = LaunchConfiguration('params_file')
-    default_params_file = os.path.join(get_package_share_directory("articubot_one"),
+    slam_params_file = LaunchConfiguration('params_file')
+    default_params_file = os.path.join(get_package_share_directory("my_bot"),
                                        'config', 'mapper_params_online_async.yaml')
 
     declare_use_sim_time_argument = DeclareLaunchArgument(
@@ -28,13 +28,13 @@ def generate_launch_description():
     # default_params_file instead. This could happen due to automatic propagation of
     # LaunchArguments. See:
     # https://github.com/ros-planning/navigation2/pull/2243#issuecomment-800479866
-    has_node_params = HasNodeParams(source_file=params_file,
+    has_node_params = HasNodeParams(source_file=slam_params_file,
                                     node_name='slam_toolbox')
 
-    actual_params_file = PythonExpression(['"', params_file, '" if ', has_node_params,
+    actual_params_file = PythonExpression(['"', slam_params_file, '" if ', has_node_params,
                                            ' else "', default_params_file, '"'])
 
-    log_param_change = LogInfo(msg=['provided params_file ',  params_file,
+    log_param_change = LogInfo(msg=['provided params_file ',  slam_params_file,
                                     ' does not contain slam_toolbox parameters. Using default: ',
                                     default_params_file],
                                condition=UnlessCondition(has_node_params))
@@ -47,7 +47,10 @@ def generate_launch_description():
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
         name='slam_toolbox',
-        output='screen')
+        output='screen',
+        remappings=[('/odom', '/map')],
+        )
+    
 
     ld = LaunchDescription()
 
