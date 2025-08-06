@@ -1,19 +1,18 @@
-This folder contains all the ROS 2 launch files used for bringing up various functionalities of the my_bot robot.
-Each launch file serves a specific purpose, from simulation to mapping.
+This folder contains all the **ROS 2 launch files** responsible for starting various components of the `my_bot` robot.
 
-launch_robot.launch.py
-Launches the robot with URDF and ROS 2 Control (real hardware or minimal sim).
+### Launch Files:
 
-launch_sim.launch.py
-Starts the full simulation environment including Gazebo and robot description.
+- **`launch_robot.launch.py`**  
+   Launches the robot with its **URDF** and **ROS 2 Control** interfaces (for real hardware or basic simulation).
 
-rsp.launch.py
-Launches the Robot State Publisher, useful for visualization in RViz.
+- **`launch_sim.launch.py`**  
+   Starts the **full simulation** environment including **Gazebo** and the robot description.
 
-rplidar.launch.py
-Brings up the RPLiDAR node for laser data streaming.
+- **`rsp.launch.py`**  
+   Launches the **Robot State Publisher** — crucial for **TF tree broadcasting** and **visualization in RViz**.
 
-online_async_launch.py
-Launches SLAM Toolbox in asynchronous mode for real-time map generation.
+- **`rplidar.launch.py`**  
+   Initializes the **RPLiDAR node** to stream laser scan data for mapping or navigation.
 
-
+- **`online_async_launch.py`**  
+   Launches **SLAM Toolbox** in **asynchronous mode** to enable **real-time mapping** of the environment.
