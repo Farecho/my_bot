@@ -1,1 +1,1 @@
-This is my config folder that contains saved rviz files, controllers files and gazebo params files.
+This is my config folder that contains saved rviz files, controllers files, gazebo and mapper params files.
